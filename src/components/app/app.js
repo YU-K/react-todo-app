@@ -48,7 +48,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="todo-app">
-        <AppHeader todDo={1} done={3} />
+        <AppHeader toDo={1} done={3} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
