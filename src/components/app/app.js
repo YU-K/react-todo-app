@@ -42,9 +42,6 @@ export default class App extends React.Component {
       const idx = todoData.findIndex((el) => el.id === id);
       const oldItem = todoData.filter((todo) => todo.id === id);
 
-      console.log(todoData[idx]);
-      console.log("oldItem", oldItem);
-
       const newArray = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
 
       return {
@@ -57,6 +54,7 @@ export default class App extends React.Component {
     const newItem = this.createTodoItem(text);
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
+
       return {
         todoData: newArr,
       };
@@ -87,7 +85,7 @@ export default class App extends React.Component {
     return (
       <div className="todo-app">
         <AppHeader toDo={todoCount} done={doneCount} />
-        <div className="top-panel d-flex">
+        <div className="top-panel mb-3 d-flex">
           <SearchPanel />
           <ItemStatusFilter />
         </div>
