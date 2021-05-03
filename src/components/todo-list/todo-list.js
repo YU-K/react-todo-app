@@ -4,7 +4,13 @@ import "./todo-list.css";
 
 import TodoListItem from "../todo-list-item";
 
-const TodoList = ({ todos, onDeleted, onToggleDone, onToggleImportant }) => {
+const TodoList = ({
+  todos,
+  onDeleted,
+  onToggleDone,
+  onToggleImportant,
+  search,
+}) => {
   const elements = todos.map((todo) => {
     const { id, ...rest } = todo;
     return (

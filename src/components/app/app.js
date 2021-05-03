@@ -17,6 +17,11 @@ export default class App extends React.Component {
       this.createTodoItem("Make Awesome App"),
       this.createTodoItem("Have a lunch"),
     ],
+    term: "",
+  };
+
+  searchTodo = (term) => {
+    this.setState({ term });
   };
 
   createTodoItem(label) {
@@ -40,7 +45,6 @@ export default class App extends React.Component {
   deleteItem = (id) => {
     this.setState(({ todoData }) => {
       const idx = todoData.findIndex((el) => el.id === id);
-      const oldItem = todoData.filter((todo) => todo.id === id);
 
       const newArray = [...todoData.slice(0, idx), ...todoData.slice(idx + 1)];
 
@@ -78,7 +82,19 @@ export default class App extends React.Component {
   };
 
   render() {
-    const { todoData } = this.state;
+    const { todoData, term } = this.state;
+
+    const search = (items, term) => {
+      if (term === "") {
+        return items;
+      }
+      return items.filter((item) => {
+        return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+      });
+    };
+
+    const visibleTodos = search(todoData, term);
+
     const doneCount = todoData.filter((todo) => todo.done === true).length;
     const todoCount = todoData.length - doneCount;
 
@@ -86,14 +102,15 @@ export default class App extends React.Component {
       <div className="todo-app">
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel mb-3 d-flex">
-          <SearchPanel />
+          <SearchPanel searchTodo={this.searchTodo} />
           <ItemStatusFilter />
         </div>
         <TodoList
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
-          todos={this.state.todoData}
+          todos={visibleTodos}
           onDeleted={this.deleteItem}
+          search={this.state.search}
         />
         <ItemAddForm onItemAdded={this.addItem} />
       </div>
